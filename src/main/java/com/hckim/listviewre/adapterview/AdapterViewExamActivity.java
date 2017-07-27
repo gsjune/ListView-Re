@@ -17,6 +17,8 @@ public class AdapterViewExamActivity extends AppCompatActivity {
 
         // View
         ListView listView = (ListView) findViewById(R.id.list_view);
+//        GridView gridView = (GridView) findViewById(R.id.grid_view); // xml에서 만든 후
+//        Spinner spinner = (Spinner) findViewById(R.id.spinner); // xml에서 만든 후
 
         // Data
 //        ArrayList<String> data = new ArrayList<>();
@@ -44,5 +46,8 @@ public class AdapterViewExamActivity extends AppCompatActivity {
         PeopleAdapter adapter = new PeopleAdapter(AdapterViewExamActivity.this, data); // B(1)
 
         listView.setAdapter(adapter);
+
+//        gridView.setAdapter(adapter);
+//        spinner.setAdapter(adapter);
     }
 }
