@@ -4,13 +4,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import java.util.List;
+
 /**
  * Created by K on 2017-07-28.
  */
 
-public class PeopleAdapter extends BaseAdapter {
+public class PeopleAdapter extends BaseAdapter { // (1)
+    private final List<People> mData; // (5) (4)의 결과
 
-    @Override
+    public PeopleAdapter(List<People> data) { // (3) Constructor
+        mData = data; // (4) Create field 'mData'
+    }
+
+    @Override // (2)
     public int getCount() {
         return 0;
     }
