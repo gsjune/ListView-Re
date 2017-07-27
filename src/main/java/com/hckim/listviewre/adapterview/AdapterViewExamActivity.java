@@ -2,7 +2,6 @@ package com.hckim.listviewre.adapterview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.hckim.listviewre.R;
@@ -20,15 +19,28 @@ public class AdapterViewExamActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.list_view);
 
         // Data
-        ArrayList<String> data = new ArrayList<>();
+//        ArrayList<String> data = new ArrayList<>();
+//        for (int i = 0; i < 100; i++) {
+//            data.add("데이터 " + i);
+//        }
+        ArrayList<People> data = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            data.add("데이터 " + i);
+            int picture;
+            if (i % 2 == 0) {
+                picture = R.drawable.federer;
+            } else {
+                picture = R.mipmap.ic_launcher;
+            }
+            People people = new People("아무개 " + i, "전화번호 " + i, picture);
+            data.add(people);
         }
 
         // Adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(AdapterViewExamActivity.this,
-                android.R.layout.simple_list_item_1, data);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(AdapterViewExamActivity.this,
+//                android.R.layout.simple_list_item_1, data);
+//        ArrayAdapter<People> adapter = new ArrayAdapter<People>(AdapterViewExamActivity.this,
+//                android.R.layout.simple_list_item_1, data); // 다시 만들어야
 
-        listView.setAdapter(adapter);
+//        listView.setAdapter(adapter);
     }
 }
