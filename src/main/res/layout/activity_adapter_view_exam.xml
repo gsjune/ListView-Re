@@ -9,6 +9,8 @@
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_exam" />
+    <!--tools:listitem 미리 보기 기능-->
 
 </LinearLayout>
