@@ -41,6 +41,8 @@ public class AdapterViewExamActivity extends AppCompatActivity {
 //        ArrayAdapter<People> adapter = new ArrayAdapter<People>(AdapterViewExamActivity.this,
 //                android.R.layout.simple_list_item_1, data); // 다시 만들어야
 
-//        listView.setAdapter(adapter);
+        PeopleAdapter adapter = new PeopleAdapter(AdapterViewExamActivity.this, data); // B(1)
+
+        listView.setAdapter(adapter);
     }
 }
