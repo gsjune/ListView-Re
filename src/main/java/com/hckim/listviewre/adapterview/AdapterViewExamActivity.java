@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -86,5 +88,27 @@ public class AdapterViewExamActivity extends AppCompatActivity {
                 return true; // E(3) true로 바꿈. 이벤트 소비 제어. 이벤트 소비를 하겠다. 더 이상 이벤트가 흘러가지 않는다.
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_address, menu);
+        Log.d(TAG, "onCreateOptionsMenu: 최초 메뉴키 클릭했을 때 메뉴 호출");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: 메뉴 항목 클릭했을 때 메뉴 호출");
+
+        int id = item.getItemId();
+
+        switch(id) {
+            case R.id.action_add:
+                Intent intent = new Intent(AdapterViewExamActivity.this, DetailAddressActivity.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
