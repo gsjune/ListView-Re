@@ -68,6 +68,7 @@ public class AdapterViewExamActivity extends AppCompatActivity {
                 Toast.makeText(AdapterViewExamActivity.this, "그냥 클릭", Toast.LENGTH_SHORT).show(); // C(4)' LongClick 비교
 //                Log.d("AdapterViewExamActivity", "onItemClick: " + people.toString()); // D(1) logd Enter debug
                 Log.d(TAG, "onItemClick: " + people.toString()); // D(2) TAG Alter Enter
+
             }
         });
 
