@@ -65,7 +65,7 @@ public class AdapterViewExamActivity extends AppCompatActivity {
 //                People people = data.get(position); // C(3) data를 final로 final ArrayList<People> data...
                 People people = (People) parent.getAdapter().getItem(position); // C(3)' 방법 C(3), C(3)', 전역변수화 등
                 Toast.makeText(AdapterViewExamActivity.this, people.toString(), Toast.LENGTH_SHORT).show();
-//                Log.d("AdapterViewExamActivity", "onItemClick: " + people.toString()); // D(1) logd Enter
+//                Log.d("AdapterViewExamActivity", "onItemClick: " + people.toString()); // D(1) logd Enter debug
                 Log.d(TAG, "onItemClick: " + people.toString()); // D(2) TAG Alter Enter
             }
         });
