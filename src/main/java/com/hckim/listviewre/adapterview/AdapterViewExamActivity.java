@@ -2,6 +2,7 @@ package com.hckim.listviewre.adapterview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -12,6 +13,8 @@ import com.hckim.listviewre.R;
 import java.util.ArrayList;
 
 public class AdapterViewExamActivity extends AppCompatActivity {
+
+    private static final String TAG = AdapterViewExamActivity.class.getSimpleName(); // D(3) D(2)의 결과
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,8 @@ public class AdapterViewExamActivity extends AppCompatActivity {
 //                People people = data.get(position); // C(3) data를 final로 final ArrayList<People> data...
                 People people = (People) parent.getAdapter().getItem(position); // C(3)' 방법 C(3), C(3)', 전역변수화 등
                 Toast.makeText(AdapterViewExamActivity.this, people.toString(), Toast.LENGTH_SHORT).show();
+//                Log.d("AdapterViewExamActivity", "onItemClick: " + people.toString()); // D(1) logd Enter
+                Log.d(TAG, "onItemClick: " + people.toString()); // D(2) TAG Alter Enter
             }
         });
     }
