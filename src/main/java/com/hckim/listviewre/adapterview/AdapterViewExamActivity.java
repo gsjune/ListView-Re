@@ -1,5 +1,6 @@
 package com.hckim.listviewre.adapterview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -68,6 +69,12 @@ public class AdapterViewExamActivity extends AppCompatActivity {
                 Toast.makeText(AdapterViewExamActivity.this, "그냥 클릭", Toast.LENGTH_SHORT).show(); // C(4)' LongClick 비교
 //                Log.d("AdapterViewExamActivity", "onItemClick: " + people.toString()); // D(1) logd Enter debug
                 Log.d(TAG, "onItemClick: " + people.toString()); // D(2) TAG Alter Enter
+
+                Intent intent = new Intent(AdapterViewExamActivity.this, DetailAddressActivity.class);
+                intent.putExtra("name", people.getName());
+                intent.putExtra("phone", people.getPhone());
+                intent.putExtra("picture", people.getPicture());
+                startActivity(intent);
 
             }
         });
