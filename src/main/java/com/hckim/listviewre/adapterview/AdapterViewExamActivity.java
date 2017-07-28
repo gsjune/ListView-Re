@@ -61,12 +61,21 @@ public class AdapterViewExamActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(AdapterViewExamActivity.this, "" + position, Toast.LENGTH_SHORT).show(); // C(2)
+//                Toast.makeText(AdapterViewExamActivity.this, "" + position, Toast.LENGTH_SHORT).show(); // C(2)
 //                People people = data.get(position); // C(3) data를 final로 final ArrayList<People> data...
                 People people = (People) parent.getAdapter().getItem(position); // C(3)' 방법 C(3), C(3)', 전역변수화 등
-                Toast.makeText(AdapterViewExamActivity.this, people.toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AdapterViewExamActivity.this, people.toString(), Toast.LENGTH_SHORT).show(); // C(4) Click
+                Toast.makeText(AdapterViewExamActivity.this, "그냥 클릭", Toast.LENGTH_SHORT).show(); // C(4)' LongClick 비교
 //                Log.d("AdapterViewExamActivity", "onItemClick: " + people.toString()); // D(1) logd Enter debug
                 Log.d(TAG, "onItemClick: " + people.toString()); // D(2) TAG Alter Enter
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() { // E(1)
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(AdapterViewExamActivity.this, "롱 클릭" + position, Toast.LENGTH_SHORT).show(); // E(2)
+                return true; // E(3) true로 바꿈. 이벤트 소비 제어. 이벤트 소비를 하겠다. 더 이상 이벤트가 흘러가지 않는다.
             }
         });
     }
