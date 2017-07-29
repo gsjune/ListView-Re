@@ -155,30 +155,35 @@ public class AdapterViewExamActivity extends AppCompatActivity implements Dialog
             case R.id.action_item1:
                 Toast.makeText(this, "action 1", Toast.LENGTH_SHORT).show();
 
-                // 물어보자 AlertDialog H(1)
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("삭제");
-                builder.setMessage("정말로 삭제하시겠습니까?");
-                // 바깥 부분 클릭했을 때 닫기
-                builder.setCancelable(false);
-//                builder.setPositiveButton("삭제", null);
-//                builder.setPositiveButton("삭제", null); // H(5) null 지우고 new 해서 하는 방법 추천
-                builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() { // H(1) 변화 new On... Enter
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // 삭제
-                        mPeopleData.remove(info.position); // F(3) H(1)' info는 final로. 결과 final AdapterView.AdapterContextMenuInfo...
-                        // 업데이트
-                        mAdapter.notifyDataSetChanged(); // F(5) 베스트
-                    }
-                });
-                builder.setNegativeButton("아니오", this); // H(2) this 빨간 줄 H(3)의 implements... 후 implements method 결과 없어짐
-                builder.setIcon(R.drawable.federer);
+//                // 물어보자 AlertDialog H(1)
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setTitle("삭제");
+//                builder.setMessage("정말로 삭제하시겠습니까?");
+//                // 바깥 부분 클릭했을 때 닫기
+//                builder.setCancelable(false);
+////                builder.setPositiveButton("삭제", null);
+////                builder.setPositiveButton("삭제", null); // H(5) null 지우고 new 해서 하는 방법 추천
+//                builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() { // H(1) 변화 new On... Enter
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // 삭제
+//                        mPeopleData.remove(info.position); // F(3) H(1)' info는 final로. 결과 final AdapterView.AdapterContextMenuInfo...
+//                        // 업데이트
+//                        mAdapter.notifyDataSetChanged(); // F(5) 베스트
+//                    }
+//                });
+//                builder.setNegativeButton("아니오", this); // H(2) this 빨간 줄 H(3)의 implements... 후 implements method 결과 없어짐
+//                builder.setIcon(R.drawable.federer);
+//
+////                AlertDialog dialog = builder.create();
+////                dialog.show();
+//
+//                builder.create().show();
 
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
 
-                builder.create().show();
+                showDefaultDialog(info); // I(2) I(1)에서 메소드로 뺀 결과
+
+
 
 //                // 삭제
 //                mPeopleData.remove(info.position); // F(3) F(3)과 F(5) H(1)'으로 이동
@@ -188,11 +193,76 @@ public class AdapterViewExamActivity extends AppCompatActivity implements Dialog
                 return true;
             case R.id.action_item2:
                 Toast.makeText(this, "action 2", Toast.LENGTH_SHORT).show();
+
+//                AlertDialog.Builder // I(1) builder 이름 겹침. final Alert.Builder builder ~ });까지 메소드로 뺌
+                showCustomDialog(); // I(3) Create method
+
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
     }
+
+    private void showCustomDialog() { // I(3)' I(3)의 결과
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+//        View view = LayoutInflater.from(this).inflate(R.layout.dialog_signin, null, false);
+        View view = getLayoutInflater().inflate(R.layout.dialog_signin, null, false);
+        builder.setView(view);
+
+       final AlertDialog dialog = builder.create();
+
+//        builder.setPositiveButton("예", null);
+//        builder.setNegativeButton("아니오", null);
+
+        view.findViewById(R.id.positive_button).setOnClickListener(new View.OnClickListener() { // new 다음 On... Enter
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AdapterViewExamActivity.this, "잘 눌림", Toast.LENGTH_SHORT).show();
+                // 다이얼로그 닫기
+                dialog.dismiss();
+            }
+        });
+        view.findViewById(R.id.negative_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+
+
+    private void showDefaultDialog(final AdapterView.AdapterContextMenuInfo info) { // I(2)' I(1)에서 메소드로 뺀 결과
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("삭제");
+        builder.setMessage("정말로 삭제하시겠습니까?");
+        // 바깥 부분 클릭했을 때 닫기
+        builder.setCancelable(false);
+//                builder.setPositiveButton("삭제", null);
+//                builder.setPositiveButton("삭제", null); // H(5) null 지우고 new 해서 하는 방법 추천
+        builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() { // H(1) 변화 new On... Enter
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // 삭제
+                mPeopleData.remove(info.position); // F(3) H(1)' info는 final로. 결과 final AdapterView.AdapterContextMenuInfo...
+                // 업데이트
+                mAdapter.notifyDataSetChanged(); // F(5) 베스트
+            }
+        });
+        builder.setNegativeButton("아니오", this); // H(2) this 빨간 줄 H(3)의 implements... 후 implements method 결과 없어짐
+        builder.setIcon(R.drawable.federer);
+
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
+
+        builder.create().show();
+    }
+
+
 
     @Override
     public void onBackPressed() { // G(2)
