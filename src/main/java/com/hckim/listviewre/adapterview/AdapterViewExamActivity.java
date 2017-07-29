@@ -24,7 +24,8 @@ import com.hckim.listviewre.R;
 
 import java.util.ArrayList;
 
-public class AdapterViewExamActivity extends AppCompatActivity {
+//public class AdapterViewExamActivity extends AppCompatActivity {
+public class AdapterViewExamActivity extends AppCompatActivity implements DialogInterface.OnClickListener { // H(3)
 
     private static final String TAG = AdapterViewExamActivity.class.getSimpleName(); // D(3) D(2)의 결과
     private ArrayList<People> data;
@@ -148,6 +149,7 @@ public class AdapterViewExamActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo(); // info 롱클릭된 정보가 들어 있음
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo(); // info 롱클릭된 정보가 들어 있음
         switch (item.getItemId()) {
             case R.id.action_item1:
@@ -160,22 +162,23 @@ public class AdapterViewExamActivity extends AppCompatActivity {
                 // 바깥 부분 클릭했을 때 닫기
                 builder.setCancelable(false);
 //                builder.setPositiveButton("삭제", null);
+//                builder.setPositiveButton("삭제", null); // H(5) null 지우고 new 해서 하는 방법 추천
                 builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() { // H(1) 변화 new On... Enter
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 삭제
-                        mPeopleData.remove(info.position); // F(3) H(1)' info는 final로
+                        mPeopleData.remove(info.position); // F(3) H(1)' info는 final로. 결과 final AdapterView.AdapterContextMenuInfo...
                         // 업데이트
                         mAdapter.notifyDataSetChanged(); // F(5) 베스트
                     }
                 });
-                builder.setNegativeButton("아니오", null);
+                builder.setNegativeButton("아니오", this); // H(2) this 빨간 줄 H(3)의 implements... 후 implements method 결과 없어짐
+                builder.setIcon(R.drawable.federer);
 
 //                AlertDialog dialog = builder.create();
 //                dialog.show();
 
                 builder.create().show();
-//                builder.setIcon(R.drawable.federer);
 
 //                // 삭제
 //                mPeopleData.remove(info.position); // F(3) F(3)과 F(5) H(1)'으로 이동
@@ -203,5 +206,15 @@ public class AdapterViewExamActivity extends AppCompatActivity {
 
         // 뒤로 가기
         super.onBackPressed();
+    }
+
+    @Override // 비추천 방법 H(1)이 추천 방법
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which) {
+            case DialogInterface.BUTTON_POSITIVE:
+                break;
+            case DialogInterface.BUTTON_NEGATIVE:
+                break;
+        }
     }
 }
