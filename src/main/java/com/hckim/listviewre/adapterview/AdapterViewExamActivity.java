@@ -10,7 +10,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.hckim.listviewre.R;
@@ -33,8 +35,8 @@ public class AdapterViewExamActivity extends AppCompatActivity {
         // View
 //        ListView listView = (ListView) findViewById(R.id.list_view);
         mListView = (ListView) findViewById(R.id.list_view); // F(7)
-//        GridView gridView = (GridView) findViewById(R.id.grid_view); // xml에서 만든 후
-//        Spinner spinner = (Spinner) findViewById(R.id.spinner); // xml에서 만든 후
+        GridView gridView = (GridView) findViewById(R.id.grid_view); // xml에서 만든 후
+        Spinner spinner = (Spinner) findViewById(R.id.spinner); // xml에서 만든 후
 
         // data
 //        ArrayList<String> data = new ArrayList<>();
@@ -65,8 +67,8 @@ public class AdapterViewExamActivity extends AppCompatActivity {
 
         mListView.setAdapter(mAdapter);
 
-//        gridView.setAdapter(adapter);
-//        spinner.setAdapter(adapter);
+        gridView.setAdapter(mAdapter);
+        spinner.setAdapter(mAdapter);
 
         // OnItemClickListener
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // C(1) new O... Enter
