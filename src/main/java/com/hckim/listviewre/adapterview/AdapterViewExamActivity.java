@@ -1,9 +1,11 @@
 package com.hckim.listviewre.adapterview;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -146,14 +148,39 @@ public class AdapterViewExamActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo(); // info 롱클릭된 정보가 들어 있음
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo(); // info 롱클릭된 정보가 들어 있음
         switch (item.getItemId()) {
             case R.id.action_item1:
                 Toast.makeText(this, "action 1", Toast.LENGTH_SHORT).show();
-                // 삭제
-                mPeopleData.remove(info.position); // F(3)
-                // 업데이트
-                mAdapter.notifyDataSetChanged(); // F(5) 베스트
+
+                // 물어보자 AlertDialog H(1)
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("삭제");
+                builder.setMessage("정말로 삭제하시겠습니까?");
+                // 바깥 부분 클릭했을 때 닫기
+                builder.setCancelable(false);
+//                builder.setPositiveButton("삭제", null);
+                builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() { // H(1) 변화 new On... Enter
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 삭제
+                        mPeopleData.remove(info.position); // F(3) H(1)' info는 final로
+                        // 업데이트
+                        mAdapter.notifyDataSetChanged(); // F(5) 베스트
+                    }
+                });
+                builder.setNegativeButton("아니오", null);
+
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
+
+                builder.create().show();
+//                builder.setIcon(R.drawable.federer);
+
+//                // 삭제
+//                mPeopleData.remove(info.position); // F(3) F(3)과 F(5) H(1)'으로 이동
+//                // 업데이트
+//                mAdapter.notifyDataSetChanged(); // F(5) 베스트
 
                 return true;
             case R.id.action_item2:
