@@ -1,7 +1,9 @@
 package com.hckim.listviewre.adapterview;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -10,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -26,6 +29,7 @@ public class AdapterViewExamActivity extends AppCompatActivity {
     private ArrayList<People> mPeopleData;
     private PeopleAdapter mAdapter; // F(6)' F(6)의 결과
     private ListView mListView; // F(7)' F(7)의 결과
+    private EditText mWeatherEditText; // G(2)'의 결과
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +106,15 @@ public class AdapterViewExamActivity extends AppCompatActivity {
 
         // Context 메뉴 연결
         registerForContextMenu(mListView); // F(1)
-    }
 
+        // SharedPreference 데이터 복원 G(1)
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        String weather = settings.getString("weather", "맑음");
+
+//        EditText mWeatherEditText = (EditText) findViewById(R.id.weather_edit);
+        mWeatherEditText = (EditText) findViewById(R.id.weather_edit); // G(2)' mWeather 전역변수로
+        mWeatherEditText.setText(weather);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_address, menu);
@@ -151,5 +162,19 @@ public class AdapterViewExamActivity extends AppCompatActivity {
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() { // G(2)
+        // 저장
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("weather", mWeatherEditText.getText().toString());
+
+        // Commit the edits!
+        editor.apply(); // 비동기
+
+        // 뒤로 가기
+        super.onBackPressed();
     }
 }
